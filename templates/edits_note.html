@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <link rel="{{ url_for('static', filename='images/fave-icon.png') }}" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=5"
+    />
+    <title>Go Notes | Empower Your Thoughts with Go Notes.</title>
+    <link href="{{ url_for('static', filename='styles/main.css') }}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      .form-control {
+        border-radius: 30px;
+        padding: 1.25rem;
+      }
+    </style>
+  </head>
+
+<body><!-- page header -->
+  <section class="section">
+    <div class="container">
+      <div class="row items-center justify-center">
+        <div class="md:col-12 lg:col-8 aos-init aos-animate" data-aos="fade-up">
+          <div class="text-center">
+            <div class="mb-6">
+              <h3 class="h5 font-semibold">Edit Your Note Here.</h3>
+            </div>
+          </div>
+          <div class="rounded-2xl p-12 pb-14 shadow">
+            <form action="{{ url_for('edit_note', id=note.id) }}" method="post">
+              <div class="mb-6">
+                <label class="mb-2 block font-medium text-theme-dark/80" for="name">Note Title</label>
+                <input class="form-control shadow-none" id="title" name="title" type="text" placeholder=" " required="" value="{{ note.title }}">
+              </div>
+              <div class="mb-6">
+                <label class="mb-2 block font-medium text-theme-dark/80" for="message">Note Content</label>
+                <textarea class="form-control h-auto shadow-none" id="body" name="body" rows="6" required="">{{ note.body }}</textarea>
+              </div>
+              <button class="btn btn-primary mt-6 w-full" type="submit" aria-label="Send Message">
+                Edit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+<script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+</body>
+</html>

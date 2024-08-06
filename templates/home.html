@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+<head>
+	<meta charset="utf-8">
+	<title>Lister2 - #1 Todo List Website.</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+	<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+	<link rel="icon" href="static/images/favicon.png" type="image/x-icon">
+
+  <!-- # Main Style Sheet -->
+	<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <style>
+        footer p {
+            text-align: center;
+            padding-bottom: 10px;
+            font-size: 0.8rem;
+          }
+        .block h1 {
+            text-align: center;
+        }  
+
+        .block p {
+            text-align: center;
+        }  
+
+        .block {
+            padding-left: 30px;
+        }
+
+        @media (max-width: 600px) {
+            .block {
+              padding-left: 0%;
+            }
+          }
+
+        .under-text {
+            text-align: center;
+        }  
+        body {
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
+
+        footer {
+          margin-top: auto;
+        }
+    </style>
+</head>
+
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+
+<!-- navigation -->
+<header class="navigation bg-tertiary">
+	<nav class="navbar navbar-expand-xl navbar-light text-center py-3">
+		<div class="container">
+			<a class="navbar-brand" href="/">
+				<img loading="prelaod" decoding="async" class="img-fluid" width="150" src="{{ url_for('static', filename='images/note-logo.png') }}" alt="Go Notes">
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+					<li class="nav-item"> <a class="nav-link" href="{{ url_for('index') }}">Home</a><li>
+                    {% if notes %}    
+			        <li class="nav-item"><a class="nav-link" href="{{ url_for('note_list') }}">Notes</a></li>
+                    {% endif %}
+				</ul>
+				<!-- account btn --> <a href="/logout" class="btn btn-primary ms-2 ms-lg-3">Log Out</a>
+			</div>
+		</div>
+	</nav>
+</header>
+<!-- /navigation -->
+
+<div class="modal applyLoanModal fade" id="applyLoan" tabindex="-1" aria-labelledby="applyLoanLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h4 class="modal-title" id="exampleModalLabel">Add Note</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{{ url_for('add_note') }}" method="post">
+            <div class="row">
+              <div class="col-lg-6 mb-4 pb-2">
+                <div class="form-group">
+                  <label for="title" class="form-label">Note Title</label>
+                  <input type="text" class="form-control shadow-none" id="title" name="title" required>
+                </div>
+              </div>
+  
+              <div class="col-lg-12 mb-4 pb-2">
+                <div class="form-group">
+                  <label for="body" class="form-label">Note Content</label>
+                  <textarea class="form-control shadow-none" id="body" name="body" required></textarea>
+                </div>
+              </div>
+  
+              <div class="col-lg-12">
+                <button type="submit" class="btn btn-primary w-100">Add Note</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>  
+
+
+<section class="banner bg-tertiary position-relative overflow-hidden">
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <div class="block text-center text-lg-start pe-0 pe-xl-5">
+          <h1 class="text-capitalize mb-4">Your Note Taking Companion.</h1>
+          <p class="mb-4">With our app, you can create, edit, and delete notes effortlessly. Take advantage of features like categorization and find your notes quickly..</p> 
+            <div class="under-text">
+            <a type="button"
+            class="btn btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#applyLoan">Add
+            Note <span style="font-size: 14px;" class="ms-2 fas fa-arrow-right"></span></a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+	<div class="container">
+		<div class="row align-items-center mt-5 text-center text-md-start">
+      <div class="col-lg-4">
+			</div>
+			<div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
+				<p> Copyright ©  <script>
+                    var CurrentYear = new Date().getFullYear()
+                    document.write(CurrentYear)
+                  </script> - Design &amp; Developed by <a href="#">Nathaniel Ademola</a></p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+<!-- # JS Plugins -->
+<script src="{{ url_for('static', filename='/scripts/bootstrap.min.js') }}"></script>
+<!-- Main Script -->
+<script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+
+</body>
+</html>

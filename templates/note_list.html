@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="zxx">
+<head>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/fave-icon.png') }}" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=5"
+  />
+  <title>Go Notes | Empower Your Thoughts with Go Notes.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="{{ url_for('static', filename='styles/main.css') }}" rel="stylesheet" />
+  <style>
+    @media (max-width: 576px) {
+      .section-title {
+        margin-top: -30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="career" id="open-position">
+    <div class="container-xxl relative">
+      <div class="row justify-center">
+        <div class="col-12 lg:col-10">
+          <div class="px-4 py-20">
+            <div class="section-title">
+              <h5 class="title">Notes</h5>
+            </div>
+            <div class="row pt-6">
+              {% for note in notes[::-1] %}
+              <div class="col-md-5 mb-6 aos-init relative" data-aos="fade-up">
+                <div class="rounded-2xl bg-white px-4 py-8 text-center shadow-[0_10px_34px_rgb(0,0,0,0.05)]">
+                  <h3 class="h5 mb-2 font-semibold">{{ note.title }}</h3>
+                  <h6 class="mb-4 text-sm text-black/80">{{ note.date }}</h6>
+                  <a href="{{ url_for('view_note', id=note.id) }}" class="stretched-link flex items-center justify-center text-base font-semibold text-primary after:absolute after:inset-0">
+                    View Note
+                    <span class="ml-1 text-sm">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+</body>
+</html>
